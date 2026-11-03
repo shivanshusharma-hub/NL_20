@@ -131,9 +131,12 @@ for r in range(2, ws.max_row + 1):
         uc.fill = na_fill; vc.fill = na_fill
         continue
     nic = seg.get("nic_nep"); cr = seg.get("combined")
-    uc.value = round(nic, 2) if nic is not None else ""
-    vc.value = round(cr, 2) if cr is not None else ""
-    uc.number_format = "0.00"; vc.number_format = "0.00"
+    # Source figures are percentage points (e.g. 75.8 = 75.8%). Store as a
+    # fraction (0.758) with a percent number format, matching the file's own
+    # convention for cols J/K/L/N (value is a fraction, format '0%').
+    uc.value = round(nic / 100.0, 6) if nic is not None else ""
+    vc.value = round(cr / 100.0, 6) if cr is not None else ""
+    uc.number_format = "0.0%"; vc.number_format = "0.0%"
     matched += 1
 
 wb.save(OUT)
