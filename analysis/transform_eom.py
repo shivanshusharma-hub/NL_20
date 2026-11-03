@@ -85,10 +85,15 @@ hdr_fill = PatternFill("solid", fgColor="1F4E78")
 hdr_font = Font(bold=True, color="FFFFFF")
 brk_fill = PatternFill("solid", fgColor="E2EFDA")
 
-def transform(src, out, label):
+def transform(src, out, label, gdp_col):
+    """gdp_col: letter of the NL-4 Gross Direct Premium column (E for GI, H for
+    SAHI). The Health breakdown (Retail/Group/Govt) is pro-rated so the three
+    columns sum exactly to this NL-4 GDP value on each Health row, preserving the
+    Retail/Group/Govt mix from the Health Portfolio sheet."""
     wb = openpyxl.load_workbook(src)  # keep formulas
     ws = wb[wb.sheetnames[0]]
     max_col = ws.max_column
+    gdp_idx = column_index_from_string(gdp_col)
 
     # 1) relabel headers Lakhs -> Crs
     for c in range(1, max_col + 1):
@@ -138,6 +143,20 @@ def transform(src, out, label):
         if str(b).strip().lower() != "health":
             continue
         hb = match_insurer(last_ins)
+        # NL-4 Health GDP for this row (already converted to Crs in step 2)
+        nl4 = ws.cell(r, gdp_idx).value
+        nl4 = nl4 if isinstance(nl4, (int, float)) else None
+        # pro-rate the three sub-categories to sum to NL-4, keeping the mix
+        scaled = {}
+        if hb is not None:
+            raw = {k: (hb[k] if isinstance(hb[k], (int, float)) else 0.0)
+                   for k in ("retail", "group", "govt")}
+            raw_sum = sum(raw.values())
+            if nl4 is not None and raw_sum > 0:
+                f = nl4 / raw_sum
+                scaled = {k: raw[k] * f for k in raw}
+            else:
+                scaled = raw  # nothing to scale against; keep source values
         for key, ci in cols.items():
             cell = ws.cell(r, ci)
             cell.border = border; cell.fill = brk_fill
@@ -145,8 +164,7 @@ def transform(src, out, label):
             if hb is None:
                 cell.value = ""
             else:
-                val = hb[key]
-                cell.value = round(val, 2) if isinstance(val, (int, float)) else ""
+                cell.value = round(scaled[key], 2)
                 cell.number_format = "#,##0.00"
         if hb is None:
             unmatched.append(last_ins)
@@ -163,10 +181,10 @@ if __name__ == "__main__":
     transform(
         "/projects/sandbox/NL_20/EOM 25-26 (Premium-Exp-Comm) with NL20 Ratios.xlsx",
         "/projects/sandbox/NL_20/EOM 25-26 (Premium-Exp-Comm) with NL20 Ratios.xlsx",
-        "GI",
+        "GI", gdp_col="E",
     )
     transform(
         "/projects/sandbox/NL_20/SAHI/EOM 25-26 SAHI with NL20 Ratios.xlsx",
         "/projects/sandbox/NL_20/SAHI/EOM 25-26 SAHI with NL20 Ratios.xlsx",
-        "SAHI",
+        "SAHI", gdp_col="H",
     )
