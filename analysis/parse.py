@@ -27,6 +27,12 @@ FILE_MAP = {
     "SBI":      "SBI General Insurance Co Ltd",
     "TATA":     "Tata AIG General Insurance Co Ltd",
     "United":   "United India Insurance Co Ltd",
+    "IFFCO":    "IFFCO-Tokio General Insurance Co Ltd",
+    "LIBERTY":  "Liberty General Insurance Co. Ltd",
+    "NIA":      "The New India Assurance Co Ltd",
+    "SGI":      "Shriram General Insurance Co Ltd",
+    "USGI":     "Universal Sompo General Insurance Co Ltd",
+    "ZUNO":     "Zuno General Insurance Co Ltd",
 }
 
 # labels that denote the CURRENT (FY2025-26 up-to-Mar-2026) data row within a segment
@@ -40,16 +46,29 @@ def is_current_row(label):
     l = norm(label)
     if l in CURRENT_LABELS:
         return True
-    # IndusInd style: "Up to Q4 2025-26"
-    if re.match(r"up to q4 2025", l):
+    # IndusInd: "Up to Q4 2025-26"; Zuno: "For FY 2025-26"
+    if re.match(r"up to q4 2025", l) or re.match(r"for fy 2025", l):
         return True
     return False
+
+SEGMENT_NAME_HINTS = (
+    "fire", "marine cargo", "marine hull", "total marine", "marine",
+    "motor od", "motor tp", "total motor", "motor",
+    "health", "personal accident", "travel", "total health",
+    "workmen", "public/ product", "public/product", "engineering",
+    "aviation", "crop", "credit", "other segments", "other misc",
+    "other liability", "total miscellaneous", "total misc",
+)
+
+def is_segment_name(label):
+    l = norm(label)
+    return any(l.startswith(h) or l == h for h in SEGMENT_NAME_HINTS)
 
 def is_previous_row(label):
     l = norm(label)
     if l in PREVIOUS_LABELS:
         return True
-    if re.match(r"up to q4 2024", l):
+    if re.match(r"up to q4 2024", l) or re.match(r"for fy 2024", l):
         return True
     return False
 
@@ -58,11 +77,13 @@ def find_col(headers, kind):
     for i, h in enumerate(headers):
         hn = norm(h)
         if kind == "nic":
-            if "incurred claims" in hn and "earned premium" in hn:
+            if "incurred claims" in hn and ("earned premium" in hn or hn.strip() == "net incurred claims"):
+                return i
+            # some filings wrap so the cell only says 'net incurred'
+            if hn.strip() in ("net incurred claims", "net incurred"):
                 return i
         elif kind == "cr":
-            # handle 'combine d ratio', 'combined ratio'
-            if re.search(r"combine ?d ratio", hn):
+            if re.search(r"combine ?d rati", hn):
                 return i
     return None
 
@@ -78,69 +99,139 @@ def to_float(v):
     except ValueError:
         return None
 
-def pick_segment_table(pdf):
-    """Return the segment table: the one whose header has a NIC column AND
-    rows contain segment names like FIRE / Motor. Prefer one with a CR column."""
-    candidates = []
-    for pi, p in enumerate(pdf.pages):
+def locate_segment_block(pdf):
+    """Find (table, header_row_index, label_col) for the segment-wise block.
+    Handles: header not necessarily in row 0; a blank spacer col 0 with labels
+    in col 1 (IFFCO, NIA)."""
+    best = None  # (has_cr, width, table, hdr_idx, label_col)
+    for p in pdf.pages:
         for t in p.extract_tables():
-            if not t or not t[0]:
+            if not t:
                 continue
-            hdr = t[0]
-            if find_col(hdr, "nic") is None:
+            for hi, hrow in enumerate(t):
+                if find_col(hrow, "nic") is None:
+                    continue
+                # body after header should contain a segment name
+                body = " ".join(norm(c) for row in t[hi + 1:hi + 8] for c in row if c)
+                if not any(k in body for k in ("fire", "current period", "current year",
+                                               "up to q4", "for fy 2025", "motor")):
+                    continue
+                # determine label column: col with the most text in body rows
+                col0_txt = sum(1 for row in t[hi + 1:] if norm(row[0]) and not any(norm(c) for c in row[1:]))
+                col1_txt = sum(1 for row in t[hi + 1:]
+                               if len(row) > 1 and norm(row[1]) and not any(norm(c) for c in row[2:] if c is not None))
+                label_col = 1 if col1_txt > col0_txt else 0
+                has_cr = find_col(hrow, "cr") is not None
+                cand = (has_cr, len(hrow), t, hi, label_col)
+                if best is None or (cand[0], cand[1]) > (best[0], best[1]):
+                    best = cand
+    return best
+
+def parse_iffco(path, result):
+    """IFFCO-Tokio NL-20: segment detail spans page index 2 (Fire..PA) and
+    page index 3 (Health, Travel, Total Health, Crop, Other Misc, Total Misc,
+    Grand Total). Label column = 1; header on page2 is row index 1.
+    Columns: 1=label 2=GDP 3=NetRet 4=NetComm 5=EoM-GDP 6=EoM-GWP
+             7=NetIncClaims 8=ClaimsPaid 9=Combined 10=TechRes 11=UW."""
+    CI_NIC, CI_CR, LC = 7, 9, 1
+    result["col_nic"], result["col_cr"], result["label_col"] = CI_NIC, CI_CR, LC
+    # segment labels we keep (skip the Fire/Marine/Miscellaneous/Total *summary* block
+    # that appears before the detailed rows on page2)
+    def getnum(row, ci):
+        return to_float(row[ci]) if ci is not None and ci < len(row) else None
+    with pdfplumber.open(path) as pdf:
+        rows = []
+        for pi in (2, 3):
+            if pi < len(pdf.pages):
+                for t in pdf.pages[pi].extract_tables():
+                    rows.extend(t)
+        current_seg = None
+        seen_detail = False
+        fire_cap = None
+        total_cap = None
+        for row in rows:
+            label = norm(row[LC]) if len(row) > LC else ""
+            if not label:
                 continue
-            bodytext = " ".join(norm(c) for row in t[1:6] for c in row if c)
-            if "fire" in bodytext or "current period" in bodytext or "current year" in bodytext or "up to q4" in bodytext:
-                has_cr = find_col(hdr, "cr") is not None
-                candidates.append((has_cr, len(t[0]), t))
-    if not candidates:
-        return None
-    # prefer table that has a combined-ratio column, then the widest
-    candidates.sort(key=lambda x: (x[0], x[1]), reverse=True)
-    return candidates[0][2]
+            # detail block begins at 'Marine Cargo' (after the summary block)
+            if label == "marine cargo":
+                seen_detail = True
+            if is_current_row(label):
+                vals = {"nic_nep": getnum(row, CI_NIC), "combined": getnum(row, CI_CR)}
+                if current_seg == "Fire" and fire_cap is None:
+                    fire_cap = vals
+                elif current_seg == "Total" and total_cap is None:
+                    total_cap = vals
+                elif current_seg and seen_detail:
+                    result["segments"].append({"segment": current_seg, **vals})
+                continue
+            if is_previous_row(label):
+                continue
+            # segment name row
+            current_seg = str(row[LC]).replace("\n", " ").strip()
+        # prepend FIRE and append TOTAL from the summary block
+        if fire_cap:
+            result["segments"].insert(0, {"segment": "FIRE", **fire_cap})
+        if total_cap:
+            result["segments"].append({"segment": "TOTAL", **total_cap})
+    return result
 
 def parse_file(path):
     stem = os.path.basename(path).split(" ")[0]
     insurer = FILE_MAP.get(stem, f"UNKNOWN({stem})")
     result = {"file": os.path.basename(path), "insurer": insurer, "segments": [], "notes": []}
+    if stem == "IFFCO":
+        return parse_iffco(path, result)
     with pdfplumber.open(path) as pdf:
-        t = pick_segment_table(pdf)
-        if t is None:
+        loc = locate_segment_block(pdf)
+        if loc is None:
             result["notes"].append("segment table not found")
             return result
-        headers = t[0]
+        _, _, t, hdr_idx, lc = loc
+        headers = t[hdr_idx]
         ci_nic = find_col(headers, "nic")
         ci_cr = find_col(headers, "cr")
         result["col_nic"] = ci_nic
         result["col_cr"] = ci_cr
+        result["label_col"] = lc
         if ci_cr is None:
             result["notes"].append("Combined Ratio NOT reported segment-wise in this filing")
+
+        def getnum(row, ci):
+            return to_float(row[ci]) if ci is not None and ci < len(row) else None
+
         current_seg = None
-        for row in t[1:]:
-            c0 = norm(row[0])
-            rest_vals = [c for c in row[1:] if norm(c)]
-            if c0.startswith("total-current") or c0.startswith("total-upto q4 2025"):
-                nic = to_float(row[ci_nic]) if ci_nic is not None and ci_nic < len(row) else None
-                cr = to_float(row[ci_cr]) if ci_cr is not None and ci_cr < len(row) else None
-                result["segments"].append({"segment": "TOTAL", "nic_nep": nic, "combined": cr})
+        for row in t[hdr_idx + 1:]:
+            label = norm(row[lc]) if lc < len(row) else ""
+            # values present in columns to the right of label col?
+            rest_vals = [c for ci, c in enumerate(row) if ci > lc and norm(c)]
+            is_total_prefix = label.startswith("total-") or label.startswith("total -")
+            total_is_current = bool(re.search(r"(current|2025|upto q4 2025|for fy 2025)", label))
+            total_is_previous = bool(re.search(r"(previous|2024|upto q4 2024|for fy 2024)", label))
+            already_have_total = any(s["segment"] == "TOTAL" for s in result["segments"])
+            if is_total_prefix and (total_is_current or (not total_is_previous and not already_have_total)):
+                result["segments"].append({"segment": "TOTAL", "nic_nep": getnum(row, ci_nic), "combined": getnum(row, ci_cr)})
                 current_seg = None
-            elif c0.startswith("total-previous") or c0.startswith("total-upto q4 2024"):
+            elif is_total_prefix and total_is_previous:
                 continue
-            elif is_current_row(c0):
+            elif is_current_row(label):
                 if current_seg is None:
                     continue
-                nic = to_float(row[ci_nic]) if ci_nic is not None and ci_nic < len(row) else None
-                cr = to_float(row[ci_cr]) if ci_cr is not None and ci_cr < len(row) else None
-                result["segments"].append({"segment": current_seg, "nic_nep": nic, "combined": cr})
-            elif is_previous_row(c0):
+                result["segments"].append({"segment": current_seg, "nic_nep": getnum(row, ci_nic), "combined": getnum(row, ci_cr)})
+            elif is_previous_row(label):
                 continue
-            elif c0 and not rest_vals:
-                current_seg = row[0].replace("\n", " ").strip()
-            elif c0 in ("total",) and rest_vals:
-                # SBI style inline total
-                nic = to_float(row[ci_nic]) if ci_nic is not None and ci_nic < len(row) else None
-                cr = to_float(row[ci_cr]) if ci_cr is not None and ci_cr < len(row) else None
-                result["segments"].append({"segment": "TOTAL", "nic_nep": nic, "combined": cr})
+            elif label and (not rest_vals or is_segment_name(label)):
+                # segment-name row. Also catch names where header-wrap text bled
+                # into other cells (e.g. Liberty FIRE row) by matching known names,
+                # provided the row has no numeric value in the NIC/CR columns.
+                if is_segment_name(label) and (getnum(row, ci_nic) is not None or getnum(row, ci_cr) is not None):
+                    # actually a data row w/ inline label -> record it
+                    result["segments"].append({"segment": str(row[lc]).replace("\n", " ").strip(),
+                                                "nic_nep": getnum(row, ci_nic), "combined": getnum(row, ci_cr)})
+                else:
+                    current_seg = str(row[lc]).replace("\n", " ").strip()
+            elif label in ("total",) and rest_vals:
+                result["segments"].append({"segment": "TOTAL", "nic_nep": getnum(row, ci_nic), "combined": getnum(row, ci_cr)})
     return result
 
 def main():
