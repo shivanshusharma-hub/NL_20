@@ -49,6 +49,9 @@ def is_current_row(label):
     # IndusInd: "Up to Q4 2025-26"; Zuno: "For FY 2025-26"
     if re.match(r"up to q4 2025", l) or re.match(r"for fy 2025", l):
         return True
+    # SAHI health insurers: "Current period ended 31st March, 2026"
+    if l.startswith("current period ended") and "2026" in l:
+        return True
     return False
 
 SEGMENT_NAME_HINTS = (
@@ -69,6 +72,8 @@ def is_previous_row(label):
     if l in PREVIOUS_LABELS:
         return True
     if re.match(r"up to q4 2024", l) or re.match(r"for fy 2024", l):
+        return True
+    if l.startswith("previous period ended") and "2025" in l:
         return True
     return False
 
