@@ -106,7 +106,8 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
   },
   {
     "file": "Chola 25-26 Q4.pdf",
@@ -212,7 +213,8 @@
       "Combined Ratio NOT reported segment-wise in this filing"
     ],
     "col_nic": 6,
-    "col_cr": null
+    "col_cr": null,
+    "label_col": 0
   },
   {
     "file": "Digit 25-26 Q4.pdf",
@@ -316,7 +318,8 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
   },
   {
     "file": "GC 25-26 Q4.pdf",
@@ -420,7 +423,8 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
   },
   {
     "file": "HDFC 25-26 Q4.pdf",
@@ -524,7 +528,8 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
   },
   {
     "file": "ICICI 25-26 Q4.pdf",
@@ -628,7 +633,113 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
+  },
+  {
+    "file": "IFFCO 25-26 Q4.pdf",
+    "insurer": "IFFCO-Tokio General Insurance Co Ltd",
+    "segments": [
+      {
+        "segment": "FIRE",
+        "nic_nep": 75.8,
+        "combined": 105.15
+      },
+      {
+        "segment": "Marine Cargo",
+        "nic_nep": 89.74,
+        "combined": 116.67
+      },
+      {
+        "segment": "Marine Hull",
+        "nic_nep": 34.62,
+        "combined": 281.49
+      },
+      {
+        "segment": "Marine Total",
+        "nic_nep": 89.66,
+        "combined": 116.98
+      },
+      {
+        "segment": "Motor-OD",
+        "nic_nep": 71.25,
+        "combined": 125.99
+      },
+      {
+        "segment": "Motor-TP",
+        "nic_nep": 98.43,
+        "combined": 120.62
+      },
+      {
+        "segment": "Motor-Total",
+        "nic_nep": 85.65,
+        "combined": 122.66
+      },
+      {
+        "segment": "Engineering",
+        "nic_nep": 43.43,
+        "combined": 96.3
+      },
+      {
+        "segment": "Aviation",
+        "nic_nep": 0.0,
+        "combined": 0.0
+      },
+      {
+        "segment": "Workmen Compensation",
+        "nic_nep": 54.74,
+        "combined": 90.82
+      },
+      {
+        "segment": "Public/Product Liability",
+        "nic_nep": 42.33,
+        "combined": 88.32
+      },
+      {
+        "segment": "Personal Accident",
+        "nic_nep": 62.33,
+        "combined": 87.63
+      },
+      {
+        "segment": "Health (Excl Travel)",
+        "nic_nep": 93.77,
+        "combined": 117.35
+      },
+      {
+        "segment": "Travel Insurance",
+        "nic_nep": 19.35,
+        "combined": 71.64
+      },
+      {
+        "segment": "Total Health (Incl PA & Travel)",
+        "nic_nep": 89.63,
+        "combined": 113.46
+      },
+      {
+        "segment": "Crop",
+        "nic_nep": 108.3,
+        "combined": 122.83
+      },
+      {
+        "segment": "Other Miscellaneous",
+        "nic_nep": 73.74,
+        "combined": 114.47
+      },
+      {
+        "segment": "Total Miscellaneous",
+        "nic_nep": 85.34,
+        "combined": 119.84
+      },
+      {
+        "segment": "TOTAL",
+        "nic_nep": 85.13,
+        "combined": 119.27
+      }
+    ],
+    "notes": [],
+    "col_nic": 7,
+    "col_cr": 9,
+    "label_col": 1
   },
   {
     "file": "Indus 25-26 Q4.pdf",
@@ -732,7 +843,8 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
   },
   {
     "file": "Kotak 25-26 Q4.pdf",
@@ -836,7 +948,113 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
+  },
+  {
+    "file": "LIBERTY 25-26 Q4.pdf",
+    "insurer": "Liberty General Insurance Co. Ltd",
+    "segments": [
+      {
+        "segment": "FIRE",
+        "nic_nep": 31.0,
+        "combined": 64.0
+      },
+      {
+        "segment": "Marine Cargo",
+        "nic_nep": 120.0,
+        "combined": 141.0
+      },
+      {
+        "segment": "Marine Hull",
+        "nic_nep": 0.0,
+        "combined": 0.0
+      },
+      {
+        "segment": "Total Marine",
+        "nic_nep": 120.0,
+        "combined": 141.0
+      },
+      {
+        "segment": "Motor OD",
+        "nic_nep": 75.0,
+        "combined": 129.0
+      },
+      {
+        "segment": "Motor TP",
+        "nic_nep": 78.0,
+        "combined": 111.0
+      },
+      {
+        "segment": "Total Motor",
+        "nic_nep": 76.0,
+        "combined": 120.0
+      },
+      {
+        "segment": "Health",
+        "nic_nep": 97.0,
+        "combined": 114.0
+      },
+      {
+        "segment": "Personal Accident",
+        "nic_nep": 110.0,
+        "combined": 131.0
+      },
+      {
+        "segment": "Travel Insurance",
+        "nic_nep": 95.0,
+        "combined": 106.0
+      },
+      {
+        "segment": "Total Health",
+        "nic_nep": 97.0,
+        "combined": 114.0
+      },
+      {
+        "segment": "Workmen\u2019s Compensation/ Employer\u2019s liability",
+        "nic_nep": 86.0,
+        "combined": 126.0
+      },
+      {
+        "segment": "Public/ Product Liability",
+        "nic_nep": 20.0,
+        "combined": 59.0
+      },
+      {
+        "segment": "Engineering",
+        "nic_nep": 92.0,
+        "combined": 141.0
+      },
+      {
+        "segment": "Aviation",
+        "nic_nep": 150.0,
+        "combined": 25.0
+      },
+      {
+        "segment": "Crop Insurance",
+        "nic_nep": null,
+        "combined": null
+      },
+      {
+        "segment": "Other segments **",
+        "nic_nep": 80.0,
+        "combined": 91.0
+      },
+      {
+        "segment": "Total Miscellaneous",
+        "nic_nep": 84.0,
+        "combined": 116.0
+      },
+      {
+        "segment": "TOTAL",
+        "nic_nep": 84.0,
+        "combined": 116.0
+      }
+    ],
+    "notes": [],
+    "col_nic": 6,
+    "col_cr": 8,
+    "label_col": 0
   },
   {
     "file": "Magma 25-26 Q4.pdf",
@@ -940,7 +1158,108 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
+  },
+  {
+    "file": "NIA 25-26 Q4.pdf",
+    "insurer": "The New India Assurance Co Ltd",
+    "segments": [
+      {
+        "segment": "FIRE",
+        "nic_nep": 76.54,
+        "combined": 117.19
+      },
+      {
+        "segment": "Marine Cargo",
+        "nic_nep": 106.18,
+        "combined": 140.49
+      },
+      {
+        "segment": "Marine Hull",
+        "nic_nep": 42.56,
+        "combined": 62.71
+      },
+      {
+        "segment": "Total Marine",
+        "nic_nep": 86.74,
+        "combined": 116.73
+      },
+      {
+        "segment": "Motor OD",
+        "nic_nep": 108.85,
+        "combined": 144.66
+      },
+      {
+        "segment": "Motor TP",
+        "nic_nep": 113.86,
+        "combined": 135.29
+      },
+      {
+        "segment": "Total Motor",
+        "nic_nep": 111.63,
+        "combined": 139.5
+      },
+      {
+        "segment": "Health",
+        "nic_nep": 99.52,
+        "combined": 118.19
+      },
+      {
+        "segment": "Personal Accident",
+        "nic_nep": 82.96,
+        "combined": 103.91
+      },
+      {
+        "segment": "Total Health",
+        "nic_nep": 99.05,
+        "combined": 117.79
+      },
+      {
+        "segment": "Workmen\u2019s Compensation/ Employer\u2019s liability",
+        "nic_nep": 40.06,
+        "combined": 73.29
+      },
+      {
+        "segment": "Public/ Product Liability+Other Liabilities",
+        "nic_nep": 54.16,
+        "combined": 82.73
+      },
+      {
+        "segment": "Engineering",
+        "nic_nep": 27.8,
+        "combined": 47.35
+      },
+      {
+        "segment": "Aviation",
+        "nic_nep": 285.6,
+        "combined": 306.17
+      },
+      {
+        "segment": "Crop Insurance",
+        "nic_nep": 96.15,
+        "combined": 104.84
+      },
+      {
+        "segment": "Other Miscellaneous",
+        "nic_nep": 72.01,
+        "combined": 102.24
+      },
+      {
+        "segment": "Total Miscellaneous",
+        "nic_nep": 100.92,
+        "combined": 123.2
+      },
+      {
+        "segment": "TOTAL",
+        "nic_nep": 98.65,
+        "combined": 122.55
+      }
+    ],
+    "notes": [],
+    "col_nic": 7,
+    "col_cr": 8,
+    "label_col": 1
   },
   {
     "file": "National 25-26 Q4.pdf",
@@ -1044,7 +1363,8 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
   },
   {
     "file": "Oriental 25-26 Q4.pdf",
@@ -1148,7 +1468,8 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
   },
   {
     "file": "Royal 25-26 Q4.pdf",
@@ -1252,7 +1573,8 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
   },
   {
     "file": "SBI 25-26 Q4.pdf",
@@ -1356,7 +1678,113 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
+  },
+  {
+    "file": "SGI 25-26 Q4.pdf",
+    "insurer": "Shriram General Insurance Co Ltd",
+    "segments": [
+      {
+        "segment": "FIRE",
+        "nic_nep": 28.28,
+        "combined": 99.17
+      },
+      {
+        "segment": "Marine Cargo",
+        "nic_nep": 68.42,
+        "combined": 172.63
+      },
+      {
+        "segment": "Marine Hull",
+        "nic_nep": 0.0,
+        "combined": 0.0
+      },
+      {
+        "segment": "Total Marine",
+        "nic_nep": 68.42,
+        "combined": 172.63
+      },
+      {
+        "segment": "Motor OD",
+        "nic_nep": 74.89,
+        "combined": 106.52
+      },
+      {
+        "segment": "Motor TP",
+        "nic_nep": 68.71,
+        "combined": 105.49
+      },
+      {
+        "segment": "Total Motor",
+        "nic_nep": 70.11,
+        "combined": 105.67
+      },
+      {
+        "segment": "Health",
+        "nic_nep": 101.02,
+        "combined": 102.53
+      },
+      {
+        "segment": "Personal Accident",
+        "nic_nep": 20.31,
+        "combined": 53.13
+      },
+      {
+        "segment": "Travel Insurance",
+        "nic_nep": -160.56,
+        "combined": -132.87
+      },
+      {
+        "segment": "Total Health",
+        "nic_nep": 77.65,
+        "combined": 87.13
+      },
+      {
+        "segment": "Workmen\u2019s Compensation/ Employer\u2019s liability",
+        "nic_nep": 27.67,
+        "combined": 56.61
+      },
+      {
+        "segment": "Public/ Product Liability",
+        "nic_nep": 74.35,
+        "combined": 123.33
+      },
+      {
+        "segment": "Engineering",
+        "nic_nep": 16.01,
+        "combined": 68.38
+      },
+      {
+        "segment": "Aviation",
+        "nic_nep": 0.0,
+        "combined": 0.0
+      },
+      {
+        "segment": "Crop Insurance",
+        "nic_nep": 0.0,
+        "combined": 0.0
+      },
+      {
+        "segment": "Other segments **",
+        "nic_nep": 42.0,
+        "combined": 94.47
+      },
+      {
+        "segment": "Total Miscellaneous",
+        "nic_nep": 70.44,
+        "combined": 103.76
+      },
+      {
+        "segment": "TOTAL",
+        "nic_nep": 69.9,
+        "combined": 102.54
+      }
+    ],
+    "notes": [],
+    "col_nic": 6,
+    "col_cr": 8,
+    "label_col": 0
   },
   {
     "file": "TATA 25-26 Q4.pdf",
@@ -1460,7 +1888,113 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
+  },
+  {
+    "file": "USGI 25-26 Q4.pdf",
+    "insurer": "Universal Sompo General Insurance Co Ltd",
+    "segments": [
+      {
+        "segment": "FIRE",
+        "nic_nep": 35.57,
+        "combined": 83.08
+      },
+      {
+        "segment": "Marine Cargo",
+        "nic_nep": 340.79,
+        "combined": 435.97
+      },
+      {
+        "segment": "Marine Hull",
+        "nic_nep": 45.45,
+        "combined": -665.36
+      },
+      {
+        "segment": "Total Marine",
+        "nic_nep": 324.92,
+        "combined": 366.36
+      },
+      {
+        "segment": "Motor OD",
+        "nic_nep": 66.95,
+        "combined": 108.28
+      },
+      {
+        "segment": "Motor TP",
+        "nic_nep": 54.19,
+        "combined": 64.69
+      },
+      {
+        "segment": "Total Motor",
+        "nic_nep": 60.44,
+        "combined": 85.55
+      },
+      {
+        "segment": "Health",
+        "nic_nep": 94.35,
+        "combined": 117.55
+      },
+      {
+        "segment": "Personal Accident",
+        "nic_nep": 36.74,
+        "combined": 58.76
+      },
+      {
+        "segment": "Travel Insurance",
+        "nic_nep": 3.65,
+        "combined": 114.15
+      },
+      {
+        "segment": "Total Health",
+        "nic_nep": 87.43,
+        "combined": 112.64
+      },
+      {
+        "segment": "Workmen\u2019s Compensation/ Employer\u2019s liability",
+        "nic_nep": 51.85,
+        "combined": 86.49
+      },
+      {
+        "segment": "Public/ Product Liability",
+        "nic_nep": -1.49,
+        "combined": 55.3
+      },
+      {
+        "segment": "Engineering",
+        "nic_nep": -16.27,
+        "combined": 106.31
+      },
+      {
+        "segment": "Aviation",
+        "nic_nep": 0.0,
+        "combined": 0.0
+      },
+      {
+        "segment": "Crop Insurance",
+        "nic_nep": 107.17,
+        "combined": 119.92
+      },
+      {
+        "segment": "Other Miscellaneous",
+        "nic_nep": 74.04,
+        "combined": 60.01
+      },
+      {
+        "segment": "Total Miscellaneous",
+        "nic_nep": 74.09,
+        "combined": 97.59
+      },
+      {
+        "segment": "TOTAL",
+        "nic_nep": 74.0,
+        "combined": 97.79
+      }
+    ],
+    "notes": [],
+    "col_nic": 6,
+    "col_cr": 8,
+    "label_col": 0
   },
   {
     "file": "United 25-26 Q4.pdf",
@@ -1564,6 +2098,112 @@
     ],
     "notes": [],
     "col_nic": 6,
-    "col_cr": 8
+    "col_cr": 8,
+    "label_col": 0
+  },
+  {
+    "file": "ZUNO 25-26 Q4.pdf",
+    "insurer": "Zuno General Insurance Co Ltd",
+    "segments": [
+      {
+        "segment": "FIRE",
+        "nic_nep": 78.0,
+        "combined": 136.0
+      },
+      {
+        "segment": "Marine Cargo",
+        "nic_nep": 403.0,
+        "combined": 433.0
+      },
+      {
+        "segment": "Marine Hull",
+        "nic_nep": null,
+        "combined": null
+      },
+      {
+        "segment": "Total Marine",
+        "nic_nep": 403.0,
+        "combined": 433.0
+      },
+      {
+        "segment": "Motor OD",
+        "nic_nep": 88.0,
+        "combined": 142.0
+      },
+      {
+        "segment": "Motor TP",
+        "nic_nep": 60.0,
+        "combined": 97.0
+      },
+      {
+        "segment": "Total Motor",
+        "nic_nep": 75.0,
+        "combined": 121.0
+      },
+      {
+        "segment": "Health",
+        "nic_nep": 96.0,
+        "combined": 125.0
+      },
+      {
+        "segment": "Personal Accident",
+        "nic_nep": 86.0,
+        "combined": 137.0
+      },
+      {
+        "segment": "Travel Insurance",
+        "nic_nep": 96.0,
+        "combined": 204.0
+      },
+      {
+        "segment": "Total Health",
+        "nic_nep": 95.0,
+        "combined": 127.0
+      },
+      {
+        "segment": "Workmen\u2019s Compensation/ Employer\u2019s liability",
+        "nic_nep": 297.0,
+        "combined": 333.0
+      },
+      {
+        "segment": "Public/ Product Liability",
+        "nic_nep": 207.0,
+        "combined": 244.0
+      },
+      {
+        "segment": "Engineering",
+        "nic_nep": 61.0,
+        "combined": 104.0
+      },
+      {
+        "segment": "Aviation",
+        "nic_nep": null,
+        "combined": null
+      },
+      {
+        "segment": "Crop Insurance",
+        "nic_nep": null,
+        "combined": null
+      },
+      {
+        "segment": "Other segments **",
+        "nic_nep": 90.0,
+        "combined": -2.0
+      },
+      {
+        "segment": "Total Miscellaneous",
+        "nic_nep": 84.0,
+        "combined": 123.0
+      },
+      {
+        "segment": "TOTAL",
+        "nic_nep": 84.0,
+        "combined": 124.0
+      }
+    ],
+    "notes": [],
+    "col_nic": 6,
+    "col_cr": 7,
+    "label_col": 0
   }
 ]

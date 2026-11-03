@@ -19,11 +19,18 @@ def canon_seg_nl20(name):
     n = name.strip().lower().replace("\u2019", "'")
     mp = {
         "fire": "FIRE", "marine cargo": "Marine Cargo", "marine hull": "Marine Hull",
-        "total marine": "Total Marine", "motor od": "Motor OD", "motor tp": "Motor TP",
-        "total motor": "Total Motor", "health": "Health", "personal accident": "Personal Accident",
-        "travel insurance": "Travel Insurance", "total health": "Total Health",
-        "public/ product liability": "Public/ Product Liability", "engineering": "Engineering",
-        "aviation": "Aviation", "crop insurance": "Crop Insurance",
+        "total marine": "Total Marine", "marine total": "Total Marine",
+        "motor od": "Motor OD", "motor-od": "Motor OD", "motor tp": "Motor TP", "motor-tp": "Motor TP",
+        "total motor": "Total Motor", "motor-total": "Total Motor", "motor total": "Total Motor",
+        "health": "Health", "health (excl travel)": "Health",
+        "personal accident": "Personal Accident",
+        "travel insurance": "Travel Insurance", "travel": "Travel Insurance",
+        "total health": "Total Health", "total health (incl pa & travel)": "Total Health",
+        "public/ product liability": "Public/ Product Liability",
+        "public/product liability": "Public/ Product Liability",
+        "public/ product liability+other liabilities": "Public/ Product Liability",
+        "engineering": "Engineering",
+        "aviation": "Aviation", "crop insurance": "Crop Insurance", "crop": "Crop Insurance",
         "crop insurance (incl. rural)": "Crop Insurance", "credit insurance": "Credit Insurance",
         "total miscellaneous": "Total Miscellaneous", "total": "TOTAL",
     }
